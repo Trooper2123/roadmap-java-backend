@@ -91,18 +91,15 @@ public class UserJDBC implements UserDao {
     }
 
     public int updateUserByCPF(String cpf, User user) {
-        return jdbcTemplate.update("UPDATE USER SET NAME= ?" +
-                ",ANNIVERSARY= ?" +
-                ",PHONE = ?" +
-                ",EMAIL = ?" +
-                ",ADDRESS = ?" +
-                "WHERE CPF = ?", new Object[]{cpf,
-                user.getName()
+        return jdbcTemplate.update("UPDATE USER SET NAME= ?, ANNIVERSARY= ?, PHONE = ?, EMAIL = ?, ADDRESS = ?"
+                        + " where  cpf = ?"
+                , new Object[]{
+                 user.getName()
                 , user.getAnniversary()
                 , user.getPhone()
                 , user.getEmail()
                 , user.getAddress()
+                        ,cpf
         });
     }
-
 }
