@@ -8,7 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RoadmapJavaApplication implements ApplicationRunner {
+public class RoadmapJavaApplication
+implements ApplicationRunner{
 
     @Autowired
    private Menu menu;
@@ -20,6 +21,6 @@ public class RoadmapJavaApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        menu.initCrud();
+       menu.initCrud();
     }
 }

@@ -171,7 +171,7 @@ public class Menu {
         anniversary = input.nextLine();
 
         logger.info("Insert your CPF");
-        cpf = input.next();
+        cpf = input.nextLine();
 
         logger.info("Insert your best e-mail: ");
         email = input.nextLine();
@@ -207,5 +207,4 @@ public class Menu {
                 logger.error("NOT A VALID OPTION!");
         }
     }
-
 }

@@ -21,8 +21,8 @@ public class UserController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping(value = "/cpf/{cpf}")
-    public ResponseEntity<List<User>> findUserByCPF(@PathVariable String cpf){
+    @GetMapping("/cpf")
+    public ResponseEntity<List<User>> findUserByCPF(@RequestParam("cpf") String cpf){
         List<User> list = userService.findUserByCPF(cpf);
         System.out.println(list);
         return ResponseEntity.ok().body(list);
