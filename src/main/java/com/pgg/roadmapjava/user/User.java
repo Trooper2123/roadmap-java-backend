@@ -1,23 +1,25 @@
 package com.pgg.roadmapjava.user;
 
-import org.springframework.data.annotation.Id;
-
-import javax.annotation.Generated;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
+@Entity
+@Table(name="USER")
 public class User implements Serializable {
 
-
-    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name="name")
     private String name;
+    @Column(name = "anniversary")
     private String anniversary;
+    @Column(name = "cpf")
     private String cpf;
+    @Column(name = "email")
     private String email;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "address")
     private String address;
 
     public User() {

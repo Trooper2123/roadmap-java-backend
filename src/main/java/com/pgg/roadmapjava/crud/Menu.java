@@ -2,6 +2,8 @@ package com.pgg.roadmapjava.crud;
 
 import com.pgg.roadmapjava.user.User;
 import com.pgg.roadmapjava.user.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,9 @@ public class Menu {
     @Autowired
     private UserService userService;
 
-    private char ans;
+    private char answer;
     private static Scanner input;
-
-
+    private static final Logger logger = LoggerFactory.getLogger(Menu.class);
     public Menu() {
     }
 
@@ -34,15 +35,15 @@ public class Menu {
                         + "D - Delet Client\n"
         );
 
-        ans = input.next().toUpperCase().charAt(0);
+        answer = input.next().toUpperCase().charAt(0);
 
-        chooseOperation(ans);
+        chooseOperation(answer);
 
         input.close();
     }
 
-    public void chooseOperation(char ans) {
-        switch (ans) {
+    public void chooseOperation(char answer) {
+        switch (answer) {
             case 'C':
                 this.createUser();
                 break;
@@ -56,7 +57,7 @@ public class Menu {
                 this.deleteUser();
                 break;
             default:
-                System.out.println("NOT A VALID OPTION");
+                logger.error("NOT A VALID OPTION");
         }
     }
 
@@ -67,35 +68,35 @@ public class Menu {
     }
 
     public void findUser() {
-        System.out.println("One client (o) or (a) for all clients: ");
-        this.ans = input.next().toUpperCase().charAt(0);
-        if (ans == 'A') {
+        logger.info("One client (o) or (a) for all clients: ");
+        this.answer = input.next().toUpperCase().charAt(0);
+        if (answer == 'A') {
             for (User user : userService.findAllUsers()) {
                 System.out.println(user);
             }
-        } else if (ans == 'O') {
+        } else if (answer == 'O') {
             System.out.println("Insert CPF: ");
             String cpf = input.next();
             for (User user : userService.findUserByCPF(cpf)) {
                 System.out.println(user);
             }
         } else {
-            System.out.println("Not a valid option");
+            logger.error("Not a valid option");
         }
 
         loopMenu();
     }
 
     public void deleteUser() {
-        System.out.println("Insert CPF: ");
+        logger.info("Insert CPF: ");
         String cpf = input.next();
-        System.out.println("Wish to delete permanently this user ? y/n ");
-        this.ans = input.next().charAt(0);
-        if (ans == 'y') {
+        logger.info("Wish to delete permanently this user ? y/n ");
+        this.answer = input.next().charAt(0);
+        if (answer == 'y') {
             userService.deleteUserByCPF(cpf);
-            System.out.println("Delete operation succeed");
+            logger.info("Delete operation succeed");
         } else {
-            System.out.println("Delete operation terminated");
+            logger.info("Delete operation terminated");
         }
 
         loopMenu();
@@ -103,22 +104,22 @@ public class Menu {
 
     public void updateUser() {
 
-        System.out.println("Insert CPF: ");
+        logger.info("Insert CPF: ");
         String cpf = input.next();
         List<User> userListRetunedByCPF = userService.findUserByCPF(cpf);
 
         if(userListRetunedByCPF.size() == 1) {
             User user = userListRetunedByCPF.get(0);
             System.out.println(user);
-            System.out.println("Wish to update this user ? y/n");
-            ans = input.next().toUpperCase().charAt(0);
+            logger.info("Wish to update this user ? y/n");
+            answer = input.next().toUpperCase().charAt(0);
             input.nextLine();
-            if (ans == 'Y') {
+            if (answer == 'Y') {
                 inputUpdate(user);
                userService.updateUserByCPF(cpf,user);
             }
         }else if (userListRetunedByCPF.size() == 0){
-            System.out.println("User not found.");
+           logger.error("User not found.");
         }else{
             System.out.println("More than one user for this CPF." + userListRetunedByCPF);
         }
@@ -130,19 +131,19 @@ public class Menu {
 
         String name,phone,anniversary,email,address;
 
-        System.out.println("Insert your name: ");
+        logger.info("Insert your name: ");
         name = input.nextLine();
 
-        System.out.println("Insert your phone: ");
+        logger.info("Insert your phone: ");
         phone = input.nextLine();
 
-        System.out.println("Insert your anniversary: ");
+        logger.info("Insert your anniversary: ");
         anniversary = input.nextLine();
 
-        System.out.println("Insert your best e-mail: ");
+        logger.info("Insert your best e-mail: ");
         email = input.nextLine();
 
-        System.out.println("Insert your address: ");
+        logger.info("Insert your address: ");
         address = input.nextLine();
 
 
@@ -160,22 +161,22 @@ public class Menu {
 
         String name,phone,anniversary,cpf,email,address;
 
-        System.out.println("Insert your name: ");
+        logger.info("Insert your name: ");
         name = input.nextLine();
 
-        System.out.println("Insert your phone: ");
+        logger.info("Insert your phone: ");
         phone = input.nextLine();
 
-        System.out.println("Insert your anniversary: ");
+        logger.info("Insert your anniversary: ");
         anniversary = input.nextLine();
 
-        System.out.println("Insert your CPF");
+        logger.info("Insert your CPF");
         cpf = input.next();
 
-        System.out.println("Insert your best e-mail: ");
+        logger.info("Insert your best e-mail: ");
         email = input.nextLine();
 
-        System.out.println("Insert your address: ");
+        logger.info("Insert your address: ");
         address = input.nextLine();
 
 
@@ -192,7 +193,7 @@ public class Menu {
 
     public void loopMenu() {
         char menuAnswer;
-        System.out.println("Do you wish to do another action? y/n");
+        logger.info("Do you wish to do another action? y/n");
         menuAnswer = input.next().toUpperCase().charAt(0);
 
         switch (menuAnswer) {
@@ -200,10 +201,10 @@ public class Menu {
                 initCrud();
                 break;
             case 'N':
-                System.out.println("Have a good day ! Bay :D ");
+                logger.info("Have a good day ! Bay :D ");
                 break;
             default:
-                System.out.println("NOT A VALID OPTION!");
+                logger.error("NOT A VALID OPTION!");
         }
     }
 

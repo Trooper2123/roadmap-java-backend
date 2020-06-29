@@ -42,7 +42,7 @@ public class UserJDBC implements UserDao {
 
     public Optional<User> findUserById(int id) {
         return Optional.ofNullable(jdbcTemplate
-                .queryForObject("SELECT * FROM USER WHERE ID = ?"
+                .queryForObject("SELECT * FROM USER WHERE id = ?"
                         , new Object[]{id}
                         , new BeanPropertyRowMapper<User>(User.class)));
     }
