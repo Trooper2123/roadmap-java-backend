@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping
-    public  ResponseEntity<User> insertUser(User user){
+    public  ResponseEntity<User> insertUser(@RequestBody User user){
        int user1 = userService.insertUser(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(user.getId()).toUri();
@@ -38,14 +38,14 @@ public class UserController {
 
     }
 
-    @DeleteMapping(value = "/id/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable int id){
+    @DeleteMapping("/id")
+    public ResponseEntity<Void> deleteUserById(@RequestParam("id") int id){
         userService.deleteUserById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(value = "/cpf/{cpf}")
-    public ResponseEntity<Void> deleteUserByCPF(@PathVariable String cpf){
+    @DeleteMapping("/cpf")
+    public ResponseEntity<Void> deleteUserByCPF(@RequestParam("cpf") String cpf){
         userService.deleteUserByCPF(cpf);
         return ResponseEntity.noContent().build();
     }

@@ -62,6 +62,7 @@ public class Menu {
     }
 
     public void createUser() {
+        input.nextLine();
         User user = inputUser();
         userService.insertUser(user);
         loopMenu();

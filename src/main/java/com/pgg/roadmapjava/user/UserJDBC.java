@@ -81,12 +81,14 @@ public class UserJDBC implements UserDao {
                 ",ANNIVERSARY= ?" +
                 ",PHONE = ?," +
                 "EMAIL = ?," +
-                "ADDRESS = ?", new Object[]{id,
+                "ADDRESS = ?" +
+                "where id = ?", new Object[]{
                 user.getName()
                 , user.getAnniversary()
                 , user.getPhone()
                 , user.getEmail()
                 , user.getAddress()
+                ,id
         });
     }
 
